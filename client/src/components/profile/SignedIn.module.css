@@ -1,0 +1,22 @@
+.container {
+  border: 3px rgb(98, 126, 62) solid;
+  background-color: rgb(218, 255, 170);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 50rem;
+  padding: 3rem;
+  margin-top: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container li {
+  list-style: none;
+  display: flex;
+}
+.container h2,
+h3 {
+  margin-left: 3rem;
+  margin-right: 3rem;
+}

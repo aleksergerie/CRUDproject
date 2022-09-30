@@ -1,0 +1,9 @@
+.containerSignedIn {
+  text-align: center;
+}
+
+.containerSignedIn button {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}

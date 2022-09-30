@@ -1,0 +1,24 @@
+Website CRUD app project
+
+Event registration, user
+Filter recherche par ville mois
+events participing
+
+
+pages: 
+All events/filter
+Events i registered to
+Sign Up
+My Profile (edit)
+
+
+BD:
+events (id, name, city, date)
+users (id, first_name, last_name, email, password)
+city (id, name)
+
+mardi 13: installation reactOK, creation bdOK and relationsOK, nav barOK, connect apiOK.
+
+mercredi: My Profile signinup layout
+
+jeudi: backend de mercredi
