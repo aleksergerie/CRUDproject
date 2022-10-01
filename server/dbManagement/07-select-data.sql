@@ -1,2 +1,1 @@
-
-SELECT * FROM events_users;
+SELECT id FROM users WHERE email="serge@gmail.ca" AND password="password"

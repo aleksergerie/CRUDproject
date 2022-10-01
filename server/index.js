@@ -163,16 +163,15 @@ app.listen(5000, () => {
   console.log("Server is running on port 5000");
 });
 
-/*
 //gets user profile by email
-app.get("/api/get/:email", (req, res) => {
-  const { email } = req.params;
-  const sqlGet = "SELECT * FROM users WHERE email=?";
-  db.query(sqlGet,email, (error, result) => {
+app.get("/api/get/:email/:password", (req, res) => {
+  const { email, password } = decodeURIComponent(req.params);
+
+  const sqlGet = "SELECT id FROM users WHERE email=? AND password=?";
+  db.query(sqlGet, [email, password], (error, result) => {
     if (error) {
       console.log(error);
     }
     res.send(result);
   });
 });
-*/

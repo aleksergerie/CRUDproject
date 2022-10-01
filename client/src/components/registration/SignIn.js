@@ -12,6 +12,7 @@ const initializeState = {
 function SignIn() {
   const [state, setState] = useState(initializeState);
   const { email, password } = state;
+  const { user_id, setUser_id } = useState([]);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -28,17 +29,21 @@ function SignIn() {
     if (!email || !password) {
       toast.error("Please enter a value into each field");
     } else {
-      axios
-        .post("http://localhost:5000/api/post", {
-          email,
-          password,
-        })
+      const response = axios
+        .get(
+          `http://localhost:5000/api/get/${encodeURIComponent(
+            email
+          )}/${encodeURIComponent(password)}`
+        )
         .then(() => {
+          setUser_id(response.data.id);
+          console.log(user_id);
           setState({
             email: "",
             password: "",
           }).catch((err) => toast.error(err.response.data));
         });
+
       toast.success("You Signed In Successfully");
     }
 
