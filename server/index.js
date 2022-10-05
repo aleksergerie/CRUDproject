@@ -22,7 +22,26 @@ app.get("/", (req, res) => {
 
 //gets all events
 app.get("/api/get/events", (req, res) => {
-  const sqlGet = "SELECT * FROM events";
+  const sqlGet =
+    "SELECT * FROM events INNER JOIN locations on location_id=locations.id";
+  db.query(sqlGet, (error, result) => {
+    res.send(result);
+  });
+});
+
+//gets all events by date
+app.get("/api/get/events/date", (req, res) => {
+  const sqlGet =
+    "SELECT * FROM events INNER JOIN locations on location_id=locations.id ORDER BY date_planned";
+  db.query(sqlGet, (error, result) => {
+    res.send(result);
+  });
+});
+
+//gets all events by city
+app.get("/api/get/events/city", (req, res) => {
+  const sqlGet =
+    "SELECT * FROM events INNER JOIN locations on location_id=locations.id ORDER BY city_name";
   db.query(sqlGet, (error, result) => {
     res.send(result);
   });
@@ -86,7 +105,7 @@ app.get("/api/get/users-events", (req, res) => {
 app.get("/api/get/users-events/:user_id", (req, res) => {
   const { user_id } = req.params;
   const sqlGet =
-    "SELECT * FROM events_users INNER JOIN events ON event_id = events.id WHERE user_id = ?";
+    "SELECT * FROM events_users INNER JOIN events ON event_id = events.id INNER JOIN locations on location_id=locations.id WHERE user_id = ? ";
   db.query(sqlGet, user_id, (error, result) => {
     if (error) {
       console.log(error);
@@ -150,7 +169,7 @@ app.post("/api/post/event", (req, res) => {
 app.get("/api/get/users-events/:user_id/:event_id/", (req, res) => {
   const { user_id, event_id } = req.params;
   const sqlGet =
-    "SELECT * FROM events_users INNER JOIN events ON user_id =? WHERE event_id = ?";
+    "SELECT * FROM events_users INNER JOIN events ON event_id =? WHERE user_id = ?";
   db.query(sqlGet, [user_id, event_id], (error, result) => {
     if (error) {
       console.log(error);
@@ -165,7 +184,10 @@ app.listen(5000, () => {
 
 //gets user profile by email
 app.get("/api/get/:email/:password", (req, res) => {
-  const { email, password } = decodeURIComponent(req.params);
+  const { email, password } = decodeURIComponent(req.params).replace(
+    "+40",
+    "."
+  );
 
   const sqlGet = "SELECT id FROM users WHERE email=? AND password=?";
   db.query(sqlGet, [email, password], (error, result) => {

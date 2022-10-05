@@ -1,1 +1,1 @@
-SELECT id FROM users WHERE email="serge@gmail.ca" AND password="password"
+SELECT * FROM events INNER JOIN locations on location_id=locations.id ORDER BY city_name

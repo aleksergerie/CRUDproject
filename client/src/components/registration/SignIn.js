@@ -2,6 +2,7 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import encodeUtf8 from "encode-utf8";
 
 import classes from "./SignIn.module.css";
 
@@ -31,8 +32,9 @@ function SignIn() {
     } else {
       const response = axios
         .get(
-          `http://localhost:5000/api/get/${encodeURIComponent(
-            email
+          `http://localhost:5000/api/get/${encodeURIComponent(email).replace(
+            ".",
+            "+40"
           )}/${encodeURIComponent(password)}`
         )
         .then(() => {

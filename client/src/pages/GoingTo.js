@@ -14,7 +14,6 @@ function GoingToPage() {
     );
     setData(responseId.data);
   };
-  console.log(data);
 
   useEffect(() => {
     loadData();

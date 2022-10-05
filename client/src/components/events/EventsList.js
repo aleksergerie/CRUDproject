@@ -13,6 +13,10 @@ function EventsList(props) {
             image={event.image}
             date={event.date_planned.substring(0, 10)}
             description={event.description}
+            street={event.street}
+            house_number={event.house_number}
+            postal_code={event.postal_code}
+            city={event.city_name}
           />
         ))}
       </ul>

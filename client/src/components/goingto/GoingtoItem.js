@@ -44,6 +44,11 @@ function GoingtoItem(props) {
         <h3>{props.date}</h3>
       </div>
       <div>
+        <h3>
+          {props.house_number} {props.street}, {props.city}, {props.postal_code}{" "}
+        </h3>
+      </div>
+      <div>
         <p>{props.description}</p>
       </div>
       <div>
