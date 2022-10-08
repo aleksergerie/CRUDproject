@@ -14,28 +14,28 @@ function EventsItem(props) {
   const [showModal, setShowModal] = useState();
   const user_id = 1;
   const event_id = props.id;
-  /*  trying to add confirmation if already going to event but its not working. cannot set the if statement right*/
+
   const handleAdd = (e) => {
     e.preventDefault();
 
-    const response = axios.get(
-      `http://localhost:5000/api/get/users-events/${user_id}/${event_id}/`
-    );
-    console.log(response);
-    if (response.data != null) {
-      //condition not working
-      console.log(response.data);
-      toast.error("You are already going to this event");
-    } else {
-      axios.post(`http://localhost:5000/api/post/event`, {
-        event_id,
-        user_id,
-      });
+    async function addData() {
+      const response = await axios.get(
+        `http://localhost:5000/api/get/users-events/${user_id}/${event_id}/`
+      );
 
-      toast.success("Event Added Successfully");
+      if (response.data.length != 0) {
+        toast.error("You are already going to this event");
+      } else {
+        axios.post(`http://localhost:5000/api/post/event`, {
+          event_id,
+          user_id,
+        });
+        toast.success("Event Added Successfully");
+      }
+
+      setShowModal(false);
     }
-
-    //setTimeout(() => navigate(0), 500);
+    addData();
   };
 
   function showModalHandler() {

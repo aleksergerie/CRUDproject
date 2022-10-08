@@ -4,5 +4,11 @@
   overflow: hidden;
   overflow-y: scroll;
   list-style: none;
+  padding: 1rem;
+}
+
+.container {
   background-color: rgb(0, 153, 145);
+  margin: 3rem;
+  max-width: 30%;
 }

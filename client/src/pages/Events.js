@@ -14,16 +14,19 @@ function EventsPage() {
     setData(response.data);
   };
 
-  function dateOrdering() {
-    const response = axios.get("http://localhost:5000/api/get/events/date");
+  const dateOrdering = async () => {
+    const response = await axios.get(
+      "http://localhost:5000/api/get/events/date"
+    );
     setData(response.data);
-    console.log(data);
-  }
+  };
 
-  function cityOrdering() {
-    const response = axios.get("http://localhost:5000/api/get/events/city");
+  const cityOrdering = async () => {
+    const response = await axios.get(
+      "http://localhost:5000/api/get/events/city"
+    );
     setData(response.data);
-  }
+  };
 
   useEffect(() => {
     loadData();

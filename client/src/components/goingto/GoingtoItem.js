@@ -20,6 +20,7 @@ function GoingtoItem(props) {
     axios.delete(`http://localhost:5000/api/remove/1/${props.id}`, {});
 
     toast.success("Event Removed Successfully");
+    setShowModal(false);
 
     setTimeout(() => navigate(0), 500);
   };
@@ -28,9 +29,7 @@ function GoingtoItem(props) {
     setShowModal(true);
   }
 
-  function closeModalHandler() {
-    setShowModal(false);
-  }
+  function closeModalHandler() {}
 
   return (
     <li className={classes.item}>
