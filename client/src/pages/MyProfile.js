@@ -10,7 +10,7 @@ import NotSignedIn from "../components/profile/NotSignedIn";
 
 import classes from "./MyProfile.module.css";
 
-function MyProfilePage() {
+function MyProfilePage(props) {
   const [showModal, setShowModal] = useState();
 
   function showModalHandler() {
@@ -24,7 +24,9 @@ function MyProfilePage() {
   const [data, setData] = useState([]);
 
   const loadData = async () => {
-    const response = await axios.get("http://localhost:5000/api/get/1");
+    const response = await axios.get(
+      `http://localhost:5000/api/get/${props.userId}`
+    );
     setData(response.data);
   };
 
@@ -44,6 +46,7 @@ function MyProfilePage() {
           {data.map((item, index) => {
             return (
               <SignedIn
+                keySignedIn={index}
                 first_name={item.first_name}
                 last_name={item.last_name}
                 email={item.email}

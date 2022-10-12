@@ -17,12 +17,15 @@ function GoingtoItem(props) {
     console.log(props.id);
     e.preventDefault();
 
-    axios.delete(`http://localhost:5000/api/remove/1/${props.id}`, {});
+    axios.delete(
+      `http://localhost:5000/api/remove/${props.userId}/${props.id}`,
+      {}
+    );
 
     toast.success("Event Removed Successfully");
     setShowModal(false);
 
-    setTimeout(() => navigate(0), 500);
+    setTimeout(() => navigate("/"), 500);
   };
 
   function showModalHandler() {

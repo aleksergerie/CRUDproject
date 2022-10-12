@@ -12,7 +12,7 @@ import AddToGoingto from "./AddToGoingto";
 function EventsItem(props) {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState();
-  const user_id = 1;
+  const user_id = props.userId;
   const event_id = props.id;
 
   const handleAdd = (e) => {
@@ -31,6 +31,7 @@ function EventsItem(props) {
           user_id,
         });
         toast.success("Event Added Successfully");
+        console.log(user_id);
       }
 
       setShowModal(false);

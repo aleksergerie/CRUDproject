@@ -17,6 +17,7 @@ function EventsList(props) {
             house_number={event.house_number}
             postal_code={event.postal_code}
             city={event.city_name}
+            userId={props.userId}
           />
         ))}
       </ul>

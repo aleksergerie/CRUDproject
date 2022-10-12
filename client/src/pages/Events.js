@@ -6,7 +6,7 @@ import axios from "axios";
 import EventsList from "../components/events/EventsList";
 import Filter from "../components/events/filter/Filter";
 
-function EventsPage() {
+function EventsPage(props) {
   const [data, setData] = useState([]);
 
   const loadData = async () => {
@@ -31,11 +31,12 @@ function EventsPage() {
   useEffect(() => {
     loadData();
   }, []);
+
   return (
     <div>
       <h2>Events to come</h2>
       <Filter onDate={dateOrdering} onCity={cityOrdering}></Filter>
-      <EventsList events={data} />
+      <EventsList events={data} userId={props.userId} />
     </div>
   );
 }

@@ -183,14 +183,24 @@ app.listen(5000, () => {
 });
 
 //gets user profile by email
-app.get("/api/get/:email/:password", (req, res) => {
-  const { email, password } = decodeURIComponent(req.params).replace(
-    "+40",
-    "."
-  );
-
+app.get("/api/get/registration/:email/:password", (req, res) => {
+  let { email, password } = req.params;
+  email = decodeURIComponent(email);
+  password = decodeURIComponent(password);
   const sqlGet = "SELECT id FROM users WHERE email=? AND password=?";
   db.query(sqlGet, [email, password], (error, result) => {
+    if (error) {
+      console.log(error);
+    }
+    res.send(result[0]);
+  });
+});
+
+//test
+app.get("/api/get/registration/:password", (req, res) => {
+  const { password } = req.params;
+  const sqlGet = "SELECT id FROM users WHERE password=?";
+  db.query(sqlGet, password, (error, result) => {
     if (error) {
       console.log(error);
     }

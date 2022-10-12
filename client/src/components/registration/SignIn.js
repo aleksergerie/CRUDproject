@@ -2,7 +2,6 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import encodeUtf8 from "encode-utf8";
 
 import classes from "./SignIn.module.css";
 
@@ -10,10 +9,10 @@ const initializeState = {
   email: "",
   password: "",
 };
-function SignIn() {
+function SignIn(props) {
   const [state, setState] = useState(initializeState);
   const { email, password } = state;
-  const { user_id, setUser_id } = useState([]);
+
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -24,33 +23,31 @@ function SignIn() {
     });
   };
 
+  const loadData = async () => {
+    const response = await axios
+      .get(
+        `http://localhost:5000/api/get/registration/${encodeURIComponent(
+          email
+        )}/${encodeURIComponent(password)}`
+      )
+      .catch((err) => toast.error(err.response.data));
+
+    props.setUserId(response.data.id);
+    toast.success("You Signed In Successfully");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!email || !password) {
       toast.error("Please enter a value into each field");
     } else {
-      const response = axios
-        .get(
-          `http://localhost:5000/api/get/${encodeURIComponent(email).replace(
-            ".",
-            "+40"
-          )}/${encodeURIComponent(password)}`
-        )
-        .then(() => {
-          setUser_id(response.data.id);
-          console.log(user_id);
-          setState({
-            email: "",
-            password: "",
-          }).catch((err) => toast.error(err.response.data));
-        });
-
-      toast.success("You Signed In Successfully");
+      loadData();
     }
 
     setTimeout(() => navigate("/"), 500);
   };
+
   return (
     <div className={classes.container}>
       <form onSubmit={handleSubmit}>

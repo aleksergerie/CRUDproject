@@ -3,7 +3,7 @@ import classes from "./SignedIn.module.css";
 function SignedIn(props) {
   return (
     <div className={classes.container}>
-      <li>
+      <li key={props.keySignedIn}>
         <div>
           <h2>First Name</h2>
           <h3>{props.first_name}</h3>
