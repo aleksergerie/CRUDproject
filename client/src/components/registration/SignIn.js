@@ -12,7 +12,7 @@ const initializeState = {
 function SignIn(props) {
   const [state, setState] = useState(initializeState);
   const { email, password } = state;
-
+  const { loggedIn, setLoggedIn } = useState(false);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -33,6 +33,14 @@ function SignIn(props) {
       .catch((err) => toast.error(err.response.data));
 
     props.setUserId(response.data.id);
+
+    if (response.data.auth) {
+      console.log(typeof setLoggedIn);
+      console.log(loggedIn);
+      setLoggedIn(true);
+      localStorage.setItem("token", response.data.token);
+    }
+
     toast.success("You Signed In Successfully");
   };
 
@@ -47,6 +55,14 @@ function SignIn(props) {
 
     setTimeout(() => navigate("/"), 500);
   };
+
+  function userAuthenticated() {
+    axios.get("http://localhost:5000/api/authenticated", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
+  }
 
   return (
     <div className={classes.container}>
@@ -71,6 +87,10 @@ function SignIn(props) {
 
         <input type="submit" value="Sign In" />
       </form>
+      {loggedIn && (
+          <button onClick={userAuthenticated}>Check if authenticated</button>
+        ) &&
+        console.log(loggedIn)}
     </div>
   );
 }

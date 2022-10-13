@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mysql = require("mysql2");
+const jwt = require("jsonwebtoken");
 
 app.use(cors());
 app.use(express.json());
@@ -189,21 +190,39 @@ app.get("/api/get/registration/:email/:password", (req, res) => {
   password = decodeURIComponent(password);
   const sqlGet = "SELECT id FROM users WHERE email=? AND password=?";
   db.query(sqlGet, [email, password], (error, result) => {
+    if (result) {
+      const id = result[0];
+      const token = jwt.sign({ id }, "jwtSecret", { expiresIn: 300 });
+
+      res.json({ auth: true, token: token, result: id });
+    } else {
+      res.json({ auth: false, message: "Wrong email/password combinaison" });
+    }
     if (error) {
       console.log(error);
     }
-    res.send(result[0]);
   });
 });
 
-//test
-app.get("/api/get/registration/:password", (req, res) => {
-  const { password } = req.params;
-  const sqlGet = "SELECT id FROM users WHERE password=?";
-  db.query(sqlGet, password, (error, result) => {
-    if (error) {
-      console.log(error);
-    }
-    res.send(result);
-  });
+//verify token
+const verifyJWT = (req, res, next) => {
+  const token = req.headers["x-access-token"];
+
+  if (!token) {
+    res.send("You need a token and we cannot find it");
+  } else {
+    jwt.verify(token, "jwtSecret", (err, decoded) => {
+      if (err) {
+        res.json({ auth: false, message: "You failed to authenticate" });
+      } else {
+        req.userId = decoded.id;
+        next();
+      }
+    });
+  }
+};
+
+//check if authenticated
+app.get("/api/authenticated/", verifyJWT, (req, res) => {
+  res.send("You are authenticated");
 });
