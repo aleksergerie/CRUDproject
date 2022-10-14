@@ -7,37 +7,39 @@ import EventsList from "../components/events/EventsList";
 import Filter from "../components/events/filter/Filter";
 
 function EventsPage(props) {
-  const [data, setData] = useState([]);
+    const [data, setData] = useState([]);
 
-  const loadData = async () => {
-    const response = await axios.get("http://localhost:5000/api/get/events");
-    setData(response.data);
-  };
+    const loadData = async () => {
+        const response = await axios.get(
+            `${process.env.REACT_APP_API_URL}/get/events`
+        );
+        setData(response.data);
+    };
 
-  const dateOrdering = async () => {
-    const response = await axios.get(
-      "http://localhost:5000/api/get/events/date"
+    const dateOrdering = async () => {
+        const response = await axios.get(
+            `${process.env.REACT_APP_API_URL}/get/events/date`
+        );
+        setData(response.data);
+    };
+
+    const cityOrdering = async () => {
+        const response = await axios.get(
+            `${process.env.REACT_APP_API_URL}/get/events/city`
+        );
+        setData(response.data);
+    };
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    return (
+        <div>
+            <h2>Events to come</h2>
+            <Filter onDate={dateOrdering} onCity={cityOrdering}></Filter>
+            <EventsList events={data} userId={props.userId} />
+        </div>
     );
-    setData(response.data);
-  };
-
-  const cityOrdering = async () => {
-    const response = await axios.get(
-      "http://localhost:5000/api/get/events/city"
-    );
-    setData(response.data);
-  };
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  return (
-    <div>
-      <h2>Events to come</h2>
-      <Filter onDate={dateOrdering} onCity={cityOrdering}></Filter>
-      <EventsList events={data} userId={props.userId} />
-    </div>
-  );
 }
 export default EventsPage;
