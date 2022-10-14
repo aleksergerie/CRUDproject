@@ -4,7 +4,7 @@ CREATE TABLE events_users(
     PRIMARY KEY (event_id, user_id)
 );
 
-/*CREATE TABLE events (
+CREATE TABLE events (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(200) NOT NULL CHECK (LENGTH(name) > 5),
     date_planned TIMESTAMP NOT NULL,
@@ -36,4 +36,4 @@ CREATE TABLE users(
     birthdate DATE NOT NULL,
     email VARCHAR(300) NOT NULL
     
-);*/
+);
