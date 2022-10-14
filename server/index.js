@@ -23,10 +23,14 @@ app.get("/", (req, res) => {
     res.send("Hello Express");
 });
 
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
+});
+
 //gets all events
 app.get("/api/get/events", (req, res) => {
     const sqlGet =
-        "SELECT events.id, name , date_planned, image, description, title, street, house_number, postal_code, city_name  FROM events INNER JOIN locations on location_id=locations.id";
+        "SELECT events.id, name, date_planned, image, description, title, street, house_number, postal_code, city_name FROM events INNER JOIN locations on location_id=locations.id";
     db.query(sqlGet, (error, result) => {
         res.send(result);
     });
@@ -229,8 +233,4 @@ const verifyJWT = (req, res, next) => {
 //check if authenticated
 app.get("/api/authenticated/", verifyJWT, (req, res) => {
     res.send("You are authenticated");
-});
-
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
 });
