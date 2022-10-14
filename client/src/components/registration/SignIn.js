@@ -12,7 +12,7 @@ const initializeState = {
 function SignIn(props) {
     const [state, setState] = useState(initializeState);
     const { email, password } = state;
-    const { loggedIn, setLoggedIn } = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
